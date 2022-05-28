@@ -100,7 +100,7 @@ def gather_all_data_trajectory(data_dir:str, past:int, maxT:int, minT:int=1, per
             for j in range(past+1):
                 obj_past = df_obj.iloc[i+j*period][csv_str]
                 sample.append(obj_past)
-            sample.append(df_obj.iloc[i+past+T]['id'])
+            sample.append(df_obj.iloc[i+past+maxT]['id'])
             sample.append(df_obj.iloc[i+past+maxT]['index'])
             for T in range(minT, maxT+1):
                 sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}')
