@@ -45,8 +45,8 @@ def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, perio
 
     if dynamic_env: # if dynamic env,  'f' means an image file
         csv_str = 'f'
-    else:           # else static env, 't' means the time step
-        csv_str = 't'
+    else:           # else static env, 'p' means the position
+        csv_str = 'p'
 
     column_name = [f'{csv_str}{i}' for i in range(0,past+1)] + ['id', 'index', 'T', 'x', 'y']
     df_all = pd.DataFrame(columns=column_name)
@@ -81,8 +81,8 @@ def gather_all_data_trajectory(data_dir:str, past:int, maxT:int, minT:int=1, per
 
     if dynamic_env: # if dynamic env,  'f' means an image file
         csv_str = 'f'
-    else:           # else static env, 't' means the time step
-        csv_str = 't'
+    else:           # else static env, 'p' means the position
+        csv_str = 'p'
 
     column_name = [f'{csv_str}{i}' for i in range(0,(past+1))] + ['id', 'index'] + [f'T{i}' for i in range(minT, maxT+1)]
     df_all = pd.DataFrame(columns=column_name)
@@ -145,6 +145,7 @@ def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
                         bbox_inches='tight', pad_inches=0)
             plt.close()
 
+        p_list = []   # indicate positions
         t_list = []   # time or time step
         id_list = []
         x_list = []   # x coordinate
@@ -166,13 +167,14 @@ def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
 
                 ### Generate images
                 for tr in obj.traj:
-                    idx_list.append(idx)
+                    p_list.append(f'{tr[0]}_{tr[1]}')
                     t_list.append(t)
+                    id_list.append(cnt)
+                    idx_list.append(idx)
                     x_list.append(tr[0])
                     y_list.append(tr[1])
-                    id_list.append(cnt)
                     t += 1
-        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
+        df = pd.DataFrame({'p':p_list, 't':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{idx}/', 'data.csv'), index=False)
     print()
 

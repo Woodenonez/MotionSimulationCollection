@@ -6,7 +6,7 @@ from util import utils_data
 print("Generate synthetic segmentation dataset.")
 
 root_dir = Path(__file__).resolve().parents[1]
-save_path = os.path.join(root_dir, 'Data/SID_test_20/') # save in folder
+save_path = os.path.join(root_dir, 'Data/SID_20_test/') # save in folder
 
 past = 4
 minT = 20
