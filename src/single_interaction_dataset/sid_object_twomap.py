@@ -28,21 +28,31 @@ Comments:
     I'm too tired to make more comments...
 '''
 
-def return_map(block=False):
+def return_map(map=1, block=False):
     '''10m x 10m area'''
     boundary_coords = [(0, 0), (10, 0), (10, 10), (0, 10)]
-    obstacle_list = [ 
-        [(0.0, 0.0), (0.0, 4.0), (4.0, 4.0), (4.0, 0.0)],
-        [(0.0, 6.0), (0.0, 10.0), (4.0, 10.0), (4.0, 6.0)],
-        [(6.0, 6.0), (6.0, 10.0), (10.0, 10.0), (10.0, 6.0)],
-        [(6.0, 0.0), (6.0, 4.0), (10.0, 4.0), (10.0, 0.0)],
-    ]
+    if map == 1:
+        obstacle_list = [ 
+            [(0.0, 0.0), (0.0, 4.0), (4.0, 4.0), (4.0, 0.0)],
+            [(0.0, 6.0), (0.0, 10.0), (4.0, 10.0), (4.0, 6.0)],
+            [(6.0, 6.0), (6.0, 10.0), (10.0, 10.0), (10.0, 6.0)],
+            [(6.0, 0.0), (6.0, 4.0), (10.0, 4.0), (10.0, 0.0)],
+        ]
+    elif map == 2:
+        obstacle_list = [ 
+            [(0.0, 0.0), (0.0, 4.0), (4.0, 4.0), (4.0, 0.0)],
+            [(0.0, 6.0), (0.0, 10.0), (4.0, 10.0), (4.0, 6.0)],
+            [(6.0, 6.0), (6.0, 10.0), (10.0, 10.0)],
+            [(6.0, 0.0), (6.0, 4.0), (10.0, 4.0), (10.0, 0.0)],
+        ]
+    else:
+        raise ModuleNotFoundError("Map not found!")
     if block:
         obstacle_list.append([(4.0, 4.1), (4.0, 5.9), (3.0, 5.9), (3.0, 4.1)])
 
     return boundary_coords, obstacle_list
 
-def return_path(path=1):
+def return_path(path=1, map=1, block=False):
     if path == 1: # forward
         start = (5.5, 0)
         turning = (5.5, 5)
@@ -52,9 +62,14 @@ def return_path(path=1):
         turning = (5.5, 5.5)
         end = (0, 5.5)
     elif path == 3: # right
-        start = (5.5, 0)
-        turning = (5.5, 4.5)
-        end = (10, 4.5)
+        if map == 1:
+            start = (5.5, 0)
+            turning = (5.5, 4.5)
+            end = (10, 4.5)
+        else:
+            start = (5.5, 0)
+            turning = (5.5, 4.5)
+            end = (10, random.randint(45, 85)/10)
     else:
         raise ModuleNotFoundError("Path not found!")
     return [start, turning, end]
@@ -63,15 +78,16 @@ def return_dyn_obs_path(ts, start=10):
     return [(4.5, start-x*ts) for x in range(int(10/ts)+1)]
 
 class Graph:
-    def __init__(self, block):
+    def __init__(self, map, block):
+        self.map = map
         self.block = block
-        self.boundary_coords, self.obstacle_list = return_map(block)
+        self.boundary_coords, self.obstacle_list = return_map(map, block)
 
     def get_obs_path(self, ts, start=10):
         return return_dyn_obs_path(ts, start=start)
 
     def get_path(self, path):
-        self.path = return_path(path)
+        self.path = return_path(path, self.map, self.block)
         return self.path
 
     def plot_map(self, ax, clean=False, empty=False):
@@ -142,6 +158,7 @@ if __name__ == '__main__':
 
     ts = 0.2
 
+    map_idx  = 1
     path_idx = 3
     block = True
     interact = True
@@ -151,7 +168,7 @@ if __name__ == '__main__':
     stagger = 0.2
     vmax = 1
 
-    graph = Graph(block=block)
+    graph = Graph(map=map_idx, block=block)
     path  = graph.get_path(path_idx)
     if interact:
         dyn_obs_path = graph.get_obs_path(ts)

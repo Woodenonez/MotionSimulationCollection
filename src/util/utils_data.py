@@ -132,10 +132,16 @@ def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
         
         ### For each index, save one static environment
         graph = msmd_object.Graph(boundary_coords, obstacle_list, inflation=0)
-        _, ax = plt.subplots()
+        fig, ax = plt.subplots()
         graph.plot_map(ax, clean=True) ### NOTE change this
-        ax.set_aspect('equal', 'box')
+        ax.set_aspect('equal')
         ax.axis('off')
+
+        fig.set_size_inches(4, 4) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig_size = fig.get_size_inches()*fig.dpi # w, h
+        boundary = np.array(graph.boundary_coords)
+
         if save_path is None:
             plt.show()
         else:
@@ -167,12 +173,14 @@ def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
 
                 ### Generate images
                 for tr in obj.traj:
-                    p_list.append(f'{tr[0]}_{tr[1]}')
+                    x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
+                    y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
+                    p_list.append(f'{x_in_px}_{y_in_px}')
                     t_list.append(t)
                     id_list.append(cnt)
                     idx_list.append(idx)
-                    x_list.append(tr[0])
-                    y_list.append(tr[1])
+                    x_list.append(x_in_px)
+                    y_list.append(y_in_px)
                     t += 1
         df = pd.DataFrame({'p':p_list, 't':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{idx}/', 'data.csv'), index=False)
@@ -182,24 +190,24 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
     # SID - Single-target Interaction Dataset
     def index2map(index):
         # index: [map_idx, path_idx, interact]
-        assert (12>=index>=1),("Index must be an integer from 1 to 12.")
+        assert (6>=index>=1),("Index must be an integer from 1 to 6.")
         map_dict = {1:[1,1,False], 2:[1,1,True],
                     3:[1,2,False], 4:[1,2,True],
                     5:[1,3,False], 6:[1,3,True],
 
-                    7: [2,1,False], 8: [2,1,True],
-                    9: [2,2,False], 10:[2,2,True],
-                    11:[2,3,False], 12:[2,3,True]
+                    # 7: [2,1,False], 8: [2,1,True],
+                    # 9: [2,2,False], 10:[2,2,True],
+                    # 11:[2,3,False], 12:[2,3,True]
                     }
         return map_dict[index]
 
     cnt = 0 # NOTE cnt is used as index for SID
     overall_sim_time = sim_time_per_scene * len(index_list)
     for idx in index_list:
-        map_idx, path_idx, interact = index2map(idx) # map parameters
+        _, path_idx, interact = index2map(idx) # map parameters
         stagger, vmax, target_size, ts = (0.2, 1, 0.5, 0.2) # object parameters
 
-        graph = sid_object.Graph(map=map_idx, block=False)
+        graph = sid_object.Graph(block=False)
         path  = graph.get_path(path_idx)
         if interact:
             dyn_obs_path = graph.get_obs_path(ts)
@@ -217,17 +225,25 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
                 obs_shape = patches.Circle(dyn_obs_path[obs_idx], radius=target_size/2, fc='k')
 
                 # images containing everything
-                _, ax = plt.subplots()
+                fig, ax = plt.subplots()
                 graph.plot_map(ax, clean=True) ### NOTE change this
                 ax.add_patch(obs_shape)
-                ax.set_aspect('equal', 'box')
+                ax.set_aspect('equal')
                 ax.axis('off')
+                
+                fig.set_size_inches(4, 4) # XXX depends on your dpi!
+                fig.tight_layout(pad=0)
+                fig_size = fig.get_size_inches()*fig.dpi # w, h
+
+                boundary = np.array(graph.boundary_coords)
+                x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
+                y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
+
                 if save_path is None:
                     plt.show()
                 else:
                     folder = os.path.join(save_path,f'{cnt}/')
                     Path(folder).mkdir(parents=True, exist_ok=True)
-                    plt.savefig(os.path.join(folder,f'{cnt}_{j}_{round(tr[0],4)}_{round(tr[1],4)}.png'), 
-                                bbox_inches='tight', pad_inches=0)
+                    plt.savefig(os.path.join(folder,f'{cnt}_{j}_{x_in_px}_{y_in_px}.png'))
                     plt.close()
     print()
