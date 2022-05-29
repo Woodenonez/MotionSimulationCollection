@@ -192,7 +192,8 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
                     11:[2,3,False], 12:[2,3,True]
                     }
         return map_dict[index]
-    cnt = 0
+
+    cnt = 0 # NOTE cnt is used as index for SID
     overall_sim_time = sim_time_per_scene * len(index_list)
     for idx in index_list:
         map_idx, path_idx, interact = index2map(idx) # map parameters
@@ -226,7 +227,7 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
                 else:
                     folder = os.path.join(save_path,f'{cnt}/')
                     Path(folder).mkdir(parents=True, exist_ok=True)
-                    plt.savefig(os.path.join(folder,f'{idx}_{j}_{round(tr[0],4)}_{round(tr[1],4)}.png'), 
+                    plt.savefig(os.path.join(folder,f'{cnt}_{j}_{round(tr[0],4)}_{round(tr[1],4)}.png'), 
                                 bbox_inches='tight', pad_inches=0)
                     plt.close()
     print()
