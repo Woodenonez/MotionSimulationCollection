@@ -11,13 +11,11 @@ save_path = os.path.join(root_dir, 'Data/SID_20_train/') # save in folder
 past = 4
 minT = 20
 maxT = 20
-sim_time_per_scene = 10 # times
-index_list = list(range(1,7)) #[1, 3, 5] #list(range(1,13)) # 1~12 # [1,3,5] a simple crossing
+sim_time_per_scene = 2 # times
+index_list = list(range(1,13)) # list(range(1,13)) # 1~12 # [1,3,5] a simple crossing
 
-utils_data.save_SID_data(index_list, save_path, sim_time_per_scene)
+# utils_data.save_SID_data(index_list, save_path, sim_time_per_scene)
+# print('CSV records for each index generated.')
 
-utils_data.gen_csv_trackers(save_path) # generate CSV tracking files first
-print('CSV records for each object generated.')
-
-utils_data.gather_all_data_position(save_path, past, maxT=maxT, minT=minT, dynamic_env=True) # go through all the obj folders and put them together in one CSV
+utils_data.gather_all_data_position(save_path, past, maxT=maxT, minT=minT) # go through all the obj folders and put them together in one CSV
 print('Final CSV generated!')

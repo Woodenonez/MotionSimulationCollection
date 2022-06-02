@@ -28,7 +28,7 @@ Comments:
     I'm too tired to make more comments...
 '''
 
-def return_map(block=False):
+def return_map(map_index):
     '''10m x 10m area'''
     boundary_coords = [(0, 0), (10, 0), (10, 10), (0, 10)]
     obstacle_list = [ 
@@ -37,12 +37,12 @@ def return_map(block=False):
         [(6.0, 6.0), (6.0, 10.0), (10.0, 10.0), (10.0, 6.0)],
         [(6.0, 0.0), (6.0, 4.0), (10.0, 4.0), (10.0, 0.0)],
     ]
-    if block:
+    if map_index == 2:
         obstacle_list.append([(4.0, 4.1), (4.0, 5.9), (3.0, 5.9), (3.0, 4.1)])
 
     return boundary_coords, obstacle_list
 
-def return_path(path=1):
+def return_path(path):
     if path == 1: # forward
         start = (5.5, 0)
         turning = (5.5, 5)
@@ -63,9 +63,8 @@ def return_dyn_obs_path(ts, start=10):
     return [(4.5, start-x*ts) for x in range(int(10/ts)+1)]
 
 class Graph:
-    def __init__(self, block):
-        self.block = block
-        self.boundary_coords, self.obstacle_list = return_map(block)
+    def __init__(self, map_index):
+        self.boundary_coords, self.obstacle_list = return_map(map_index)
 
     def get_obs_path(self, ts, start=10):
         return return_dyn_obs_path(ts, start=start)
