@@ -151,14 +151,14 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
     # SID - Single-target Interaction Dataset
     def index2map(index):
         # index: [map_idx, path_idx, interact]
-        assert (12>=index>=1),("Index must be an integer from 1 to 12.")
+        # map_idx=2 - blocked map
+        assert (10>=index>=1),("Index must be an integer from 1 to 10.")
         map_dict = {1:[1,1,False], 2:[1,1,True],
                     3:[1,2,False], 4:[1,2,True],
                     5:[1,3,False], 6:[1,3,True],
 
                     7: [2,1,False], 8: [2,1,True],
-                    9: [2,2,False], 10:[2,2,True],
-                    11:[2,3,False], 12:[2,3,True]
+                    9: [2,3,False], 10:[2,3,True]
                     }
         return map_dict[index]
 
