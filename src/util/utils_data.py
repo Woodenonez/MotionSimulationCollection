@@ -8,8 +8,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-from multiple_scene_multimodal_dataset import msmd_object # this is static env
 from single_interaction_dataset import sid_object         # this is dynamic env
+from multiple_scene_multimodal_dataset import msmd_object # this is static env
+from general_crossing_dataset import gcd_object           # this is static env
 
 def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
     # data_dir - index - img&csv
@@ -94,68 +95,6 @@ def save_fig_to_array(fig, save_path):
         pickle.dump(fig_in_np, f)
 
 
-def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
-    # MSMD - Multiple Scene Multimodal Dataset
-    cnt = 0 # used as ID here
-    overall_sim_time = sim_time_per_scene * len(index_list)
-    for idx in index_list:
-        boundary_coords, obstacle_list, nchoices = msmd_object.return_Map(index=idx) # map parameters
-        ts = 0.2
-        
-        ### For each index, save one static environment
-        graph = msmd_object.Graph(boundary_coords, obstacle_list, inflation=0)
-        fig, ax = plt.subplots()
-        graph.plot_map(ax, clean=True) ### NOTE change this
-        ax.set_aspect('equal')
-        ax.axis('off')
-
-        fig.set_size_inches(4, 4) # XXX depends on your dpi!
-        fig.tight_layout(pad=0)
-        fig_size = fig.get_size_inches()*fig.dpi # w, h
-        boundary = np.array(graph.boundary_coords)
-
-        if save_path is None:
-            plt.show()
-        else:
-            folder = os.path.join(save_path, f'{idx}/')
-            Path(folder).mkdir(parents=True, exist_ok=True)
-            plt.savefig(os.path.join(folder,f'{idx}.png'), 
-                        bbox_inches='tight', pad_inches=0)
-            plt.close()
-
-        t_list = []   # time or time step
-        id_list = []
-        idx_list = [] # more information (e.g. scene index)
-        x_list = []   # x coordinate
-        y_list = []   # y coordinate
-        
-        t = 0 # accumulated time for each scene (index)
-        choice_list = list(range(1,nchoices+1))
-        for ch in choice_list:
-            for i in range(sim_time_per_scene//nchoices):
-                cnt += 1
-                print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
-                stagger = 0.4   + (random.randint(0, 20)/10-1) * 0.2
-                vmax = 1        + (random.randint(0, 20)/10-1) * 0.3
-                ref_path = msmd_object.get_ref_path(index=idx, choice=ch, reverse=(i<((sim_time_per_scene//nchoices)//2)))
-
-                obj = msmd_object.MovingObject(ref_path[0], stagger=stagger)
-                obj.run(ref_path, ts, vmax)
-
-                ### Generate images
-                for tr in obj.traj:
-                    x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
-                    y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
-                    t_list.append(t)
-                    id_list.append(cnt)
-                    idx_list.append(idx)
-                    x_list.append(x_in_px)
-                    y_list.append(y_in_px)
-                    t += 1
-        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
-        df.to_csv(os.path.join(save_path, f'{idx}/', 'data.csv'), index=False)
-    print()
-
 def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
     # SID - Single-target Interaction Dataset
     def index2map(index):
@@ -231,3 +170,142 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
             df.to_csv(os.path.join(save_path, f'{cnt}/', 'data.csv'), index=False)
   
     print()
+
+def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
+    # MSMD - Multiple Scene Multimodal Dataset
+    cnt = 0 # used as ID here
+    overall_sim_time = sim_time_per_scene * len(index_list)
+    for idx in index_list:
+        boundary_coords, obstacle_list, nchoices = msmd_object.return_Map(index=idx) # map parameters
+        ts = 0.2
+        
+        ### For each index, save one static environment
+        graph = msmd_object.Graph(boundary_coords, obstacle_list, inflation=0)
+        fig, ax = plt.subplots()
+        graph.plot_map(ax, clean=True) ### NOTE change this
+        ax.set_aspect('equal')
+        ax.axis('off')
+
+        fig.set_size_inches(4, 4) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig_size = fig.get_size_inches()*fig.dpi # w, h
+        boundary = np.array(graph.boundary_coords)
+
+        if save_path is None:
+            plt.show()
+        else:
+            folder = os.path.join(save_path, f'{idx}/')
+            Path(folder).mkdir(parents=True, exist_ok=True)
+            plt.savefig(os.path.join(folder,f'{idx}.png'), 
+                        bbox_inches='tight', pad_inches=0)
+            plt.close()
+
+        t_list = []   # time or time step
+        id_list = []
+        idx_list = [] # more information (e.g. scene index)
+        x_list = []   # x coordinate
+        y_list = []   # y coordinate
+        
+        t = 0 # accumulated time for each scene (index)
+        choice_list = list(range(1,nchoices+1))
+        for ch in choice_list:
+            for i in range(sim_time_per_scene//nchoices):
+                cnt += 1
+                print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
+                stagger = 0.4   + (random.randint(0, 20)/10-1) * 0.2
+                vmax = 1        + (random.randint(0, 20)/10-1) * 0.3
+                ref_path = msmd_object.get_ref_path(index=idx, choice=ch, reverse=(i<((sim_time_per_scene//nchoices)//2)))
+
+                obj = msmd_object.MovingObject(ref_path[0], stagger=stagger)
+                obj.run(ref_path, ts, vmax)
+
+                ### Generate images
+                for tr in obj.traj:
+                    x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
+                    y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
+                    t_list.append(t)
+                    id_list.append(cnt)
+                    idx_list.append(idx)
+                    x_list.append(x_in_px)
+                    y_list.append(y_in_px)
+                    t += 1
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
+        df.to_csv(os.path.join(save_path, f'{idx}/', 'data.csv'), index=False)
+    print()
+
+def save_GCD_data(index_list:None, save_path:str, sim_time_per_scene:int):
+    # GCD - General Crossing Dataset
+
+    ts = 0.2 # sampling time
+    car_dir = 'nswe'
+    car_act = 'lsr'
+    human_dir = ['nl','nr','sl','sr','wu','wd','eu','ed']
+    human_act = list(range(1,10))
+    overall_sim_time = sim_time_per_scene * (len(car_dir)*len(car_act) + len(human_dir)*len(human_act))
+    cnt = 0
+
+    for object_type in ['human', 'car']:
+
+        if object_type is 'car':
+            this_dir, this_act = car_dir, car_act
+        else:
+            this_dir, this_act = human_dir, human_act
+
+        graph = gcd_object.Graph(inflate_margin=0)
+        fig, ax = plt.subplots()
+        graph.plot_map(ax)
+        ax.set_aspect('equal')
+        ax.axis('off')
+
+        fig.set_size_inches(4, 4) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig_size = fig.get_size_inches()*fig.dpi # w, h
+        boundary = np.array(graph.boundary_coords) # for converting coordinates to pixel indices
+
+        if save_path is None:
+            plt.show()
+        else:
+            folder = os.path.join(save_path, f'{object_type}/')
+            Path(folder).mkdir(parents=True, exist_ok=True)
+            plt.savefig(os.path.join(folder,f'{object_type}.png'), 
+                        bbox_inches='tight', pad_inches=0)
+            plt.close()
+
+        t_list = []   # time or time step
+        id_list = []
+        idx_list = [] # more information (e.g. scene index)
+        x_list = []   # x coordinate
+        y_list = []   # y coordinate
+
+        t = 0
+        for td in this_dir:
+            for ta in this_act:
+                for i in range(sim_time_per_scene):
+                    cnt += 1
+                    print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
+                    if object_type == 'human':
+                        stagger = 0.3   + (random.randint(0, 20)/10-1) * 0.2
+                        vmax = 1        + (random.randint(0, 20)/10-1) * 0.3
+                    else:
+                        stagger = 0.1
+                        vmax = 2
+                    ref_path = gcd_object.get_ref_path(object_type, td, ta)
+
+                    obj = gcd_object.MovingObject(ref_path[0], stagger=stagger)
+                    obj.run(ref_path, ts, vmax)
+
+                    ### Generate traj
+                    for tr in obj.traj:
+                        x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
+                        y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
+                        t_list.append(t)
+                        id_list.append(cnt)
+                        idx_list.append(object_type)
+                        x_list.append(x_in_px)
+                        y_list.append(y_in_px)
+                        t += 1
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
+        df.to_csv(os.path.join(save_path, f'{object_type}/', 'data.csv'), index=False)
+    print()
+
+
