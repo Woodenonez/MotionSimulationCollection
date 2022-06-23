@@ -253,7 +253,7 @@ def save_GCD_data(index_list:None, save_path:str, sim_time_per_scene:int):
 
         graph = gcd_object.Graph(inflate_margin=0)
         fig, ax = plt.subplots()
-        graph.plot_map(ax)
+        graph.plot_map(ax, clean=True)
         ax.set_aspect('equal')
         ax.axis('off')
 
