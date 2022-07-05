@@ -1,6 +1,7 @@
 import sys
 
 import math, random
+from urllib.request import parse_http_list
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -141,29 +142,27 @@ if __name__ == '__main__':
 
     ts = 0.2
 
-    path_idx = 3
-    block = True
-    interact = True
-
+    interact = False
     plot_dyn = False
 
     stagger = 0.2
     vmax = 1
 
-    graph = Graph(block=block)
-    path  = graph.get_path(path_idx)
+    graph = Graph(1)
+    path_list = [graph.get_path(x) for x in [1,2,3]]
     if interact:
         dyn_obs_path = graph.get_obs_path(ts)
     else:
         dyn_obs_path = [(-1,-1)]
 
-    obj = MovingObject(path[0], stagger)
-    obj.run(path, ts, vmax, dyn_obs_path=dyn_obs_path)
-    traj = obj.traj
+    obj_list = [MovingObject(path[0], stagger) for path in path_list]
+    for obj, path in zip(obj_list, path_list):
+        obj.run(path, ts, vmax, dyn_obs_path=dyn_obs_path)
+    traj_list = [obj.traj for obj in obj_list]
 
     if plot_dyn:
         fig, ax = plt.subplots()
-        for i, pos in enumerate(traj):
+        for i, pos in enumerate(traj_list[0]):
             ax.cla()
             graph.plot_map(ax, clean=False, empty=False)
             plt.plot(pos[0], pos[1], 'rx')
@@ -182,9 +181,9 @@ if __name__ == '__main__':
         # ------------------------
         # ax.axis('off')
         graph.plot_map(ax, clean=False, empty=False)
-        graph.plot_path(ax, color='rx--')
         graph.plot_path(ax, color='go--', path=dyn_obs_path)
-        ax.plot(np.array(traj)[:,0],np.array(traj)[:,1],'k.')
+        [graph.plot_path(ax, color='rx--', path=path) for path in path_list]
+        [ax.plot(np.array(traj)[:,0],np.array(traj)[:,1],'.') for traj in traj_list]
         ax.set_aspect('equal', 'box')
         plt.tight_layout()
         # ------------------------
