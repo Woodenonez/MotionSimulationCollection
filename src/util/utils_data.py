@@ -41,7 +41,10 @@ def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, perio
                     sample.append(df_obj.iloc[i+past]['t'])
                     sample.append(df_obj.iloc[i+past+T]['id'])
                     sample.append(df_obj.iloc[i+past+T]['index'])
-                    sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}')
+                    if minT == maxT:
+                        sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}')
+                    else:
+                        sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}_{T}')
                     ################## Sample E N D ##################
                     sample_list.append(sample)
                 df_T = pd.DataFrame(sample_list, columns=df_all.columns)

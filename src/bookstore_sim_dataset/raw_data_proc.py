@@ -79,4 +79,4 @@ save_dict = {'t':time_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_li
 save_csv = pd.DataFrame(data=save_dict)
 print(save_csv)
 
-# save_csv.to_csv(os.path.join(root_dir, 'Data', 'BSD', 'data.csv'))
+save_csv.to_csv(os.path.join(root_dir, 'Data', 'BSD', 'data.csv'))
