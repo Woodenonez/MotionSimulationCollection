@@ -318,16 +318,14 @@ def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int):
     ts = 0.2 # sampling time
     overall_sim_time = sim_time_per_scene * len(index_list)
     cnt = 0
-
-    t_list = []   # time or time step
-    id_list = []
-    idx_list = [] # more information (e.g. scene index)
-    x_list = []   # x coordinate
-    y_list = []   # y coordinate
-
-    t = 0
     graph = bookstore_object.Graph(None)
     for start_idx in index_list:
+        t = 0
+        t_list = []   # time or time step
+        id_list = []
+        idx_list = [] # more information (e.g. scene index)
+        x_list = []   # x coordinate
+        y_list = []   # y coordinate
         for _ in range(sim_time_per_scene):
             cnt += 1
             print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
