@@ -1,7 +1,6 @@
 import sys
 
 import math, random
-from urllib.request import parse_http_list
 import numpy as np
 
 import matplotlib.pyplot as plt

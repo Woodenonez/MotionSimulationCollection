@@ -38,6 +38,8 @@ def read_pgm(pgmf, bit_depth:int=16, one_line_head:bool=False, skip_second_line:
         raster.append(row)
     return raster
 
+SAVE_TO_CSV = False
+
 root_dir = pathlib.Path(__file__).resolve().parents[2]
 csv_path = os.path.join(root_dir, 'src', 'bookstore_sim_dataset/bookstore_sim_original', 'pose_list_2.csv')
 raw_csv = pd.read_csv(csv_path)
@@ -64,19 +66,20 @@ fig, ax = plt.subplots(figsize=(10,10))
 ax.imshow(the_map, cmap='gray')
 ax.set_aspect('equal')
 ax.axis('off')
-fig.set_size_inches(4, 4) # XXX depends on your dpi!
+fig.set_size_inches(5, 5) # XXX depends on your dpi!
 fig.tight_layout(pad=0)
 plt.plot(x_px, y_px, 'r.')
 plt.show()
 
 time_ms   = (raw_csv['time_stamp [milli-sec]']).to_list()
 time_list = list(range(len(time_ms)))
-x_list    = list(x_px/1500*400)
-y_list    = list(y_px/1500*400)
+x_list    = list(x_px/1500*500)
+y_list    = list(y_px/1500*500)
 id_list   = [1]*len(time_list)
 idx_list  = ['bookstore_sim']*len(time_list)
 save_dict = {'t':time_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}
 save_csv = pd.DataFrame(data=save_dict)
 print(save_csv)
 
-save_csv.to_csv(os.path.join(root_dir, 'Data', 'BSD', 'data.csv'))
+if SAVE_TO_CSV:
+    save_csv.to_csv(os.path.join(root_dir, 'Data', 'BSD', 'data.csv'))

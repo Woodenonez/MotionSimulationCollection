@@ -11,6 +11,7 @@ import matplotlib.patches as patches
 from single_interaction_dataset import sid_object         # this is dynamic env
 from multiple_scene_multimodal_dataset import msmd_object # this is static env
 from general_crossing_dataset import gcd_object           # this is static env
+from bookstore_sim_dataset import bookstore_object        # this is static env
 
 def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
     # data_dir - index - img&csv
@@ -309,6 +310,46 @@ def save_GCD_data(index_list:None, save_path:str, sim_time_per_scene:int):
                         t += 1
         df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{object_type}/', 'data.csv'), index=False)
+    print()
+
+def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int):
+    # BSD - Bookstore Simulation Dataset
+
+    ts = 0.2 # sampling time
+    overall_sim_time = sim_time_per_scene * len(index_list)
+    cnt = 0
+
+    t_list = []   # time or time step
+    id_list = []
+    idx_list = [] # more information (e.g. scene index)
+    x_list = []   # x coordinate
+    y_list = []   # y coordinate
+
+    t = 0
+    graph = bookstore_object.Graph(None)
+    for start_idx in index_list:
+        for _ in range(sim_time_per_scene):
+            cnt += 1
+            print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
+            num_traversed_nodes = random.choice(list(range(5,8)))
+            ref_path = graph.get_path(start_node_index=start_idx, num_traversed_nodes=num_traversed_nodes)
+
+            stagger = 8 + random.randint(1,5)
+            vmax = 40 + random.randint(1,30)
+            obj = bookstore_object.MovingObject(ref_path[0], stagger=stagger)
+            obj.run(ref_path, ts, vmax)
+
+            ### Generate traj
+            for tr in obj.traj:
+                t_list.append(t)
+                id_list.append(cnt)
+                idx_list.append(start_idx)
+                x_list.append(tr[0])
+                y_list.append(tr[1])
+                t += 1
+        Path(os.path.join(save_path, f'{start_idx}')).mkdir(parents=True, exist_ok=True)
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
+        df.to_csv(os.path.join(save_path, f'{start_idx}', 'data.csv'), index=False)
     print()
 
 
