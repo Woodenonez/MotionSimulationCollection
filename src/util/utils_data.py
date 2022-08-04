@@ -7,12 +7,14 @@ import pandas as pd
 
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from sklearn.utils import deprecated
 
 from single_interaction_dataset import sid_object         # this is dynamic env
 from multiple_scene_multimodal_dataset import msmd_object # this is static env
 from general_crossing_dataset import gcd_object           # this is static env
 from bookstore_sim_dataset import bookstore_object        # this is static env
 
+@deprecated
 def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
     # data_dir - index - img&csv
     if save_dir is None:
@@ -51,7 +53,7 @@ def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, perio
                 df_T = pd.DataFrame(sample_list, columns=df_all.columns)
                 df_all = pd.concat([df_all, df_T], ignore_index=True)
     df_all.to_csv(os.path.join(save_dir, 'all_data.csv'), index=False)
-
+@deprecated
 def gather_all_data_trajectory(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
     if save_dir is None:
         save_dir = data_dir
@@ -86,6 +88,42 @@ def gather_all_data_trajectory(data_dir:str, past:int, maxT:int, minT:int=1, per
             df_T = pd.DataFrame(sample_list, columns=df_all.columns)
             df_all = pd.concat([df_all, df_T], ignore_index=True)
     df_all.to_csv(os.path.join(save_dir, 'all_data.csv'), index=False)
+
+def gather_all_data(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
+    if save_dir is None:
+        save_dir = data_dir
+
+    column_name = [f'p{i}' for i in range(0,(past+1))] + ['t', 'id', 'index'] + [f'T{i}' for i in range(minT, maxT+1)]
+    df_all = pd.DataFrame(columns=column_name)
+    obj_folders = os.listdir(data_dir)
+    cnt = 0
+    for objf in obj_folders:
+        cnt += 1
+        print(f'\rProcess {cnt}/{len(obj_folders)}', end='    ')
+        df_scene = pd.read_csv(os.path.join(data_dir, objf, 'data.csv'))
+        all_obj_id = df_scene['id'].unique()
+        for i in range(len(all_obj_id)):
+            obj_id = all_obj_id[i]
+            df_obj = df_scene[df_scene['id'] == obj_id]
+            
+            sample_list = []
+            for i in range(len(df_obj)-past*period-maxT): # each sample
+                sample = []
+                ################## Sample START ##################
+                for j in range(past+1):
+                    obj_past = f'{df_obj.iloc[i+j*period]["x"]}_{df_obj.iloc[i+j*period]["y"]}_{df_obj.iloc[i+j*period]["t"]}'
+                    sample.append(obj_past)
+                sample.append(df_obj.iloc[i+past]['t'])
+                sample.append(df_obj.iloc[i+past+maxT]['id'])
+                sample.append(df_obj.iloc[i+past+maxT]['index'])
+                for T in range(minT, maxT+1):
+                    sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}')
+                ################## Sample E N D ##################
+                sample_list.append(sample)
+            df_T = pd.DataFrame(sample_list, columns=df_all.columns)
+            df_all = pd.concat([df_all, df_T], ignore_index=True)
+    df_all.to_csv(os.path.join(save_dir, 'all_data.csv'), index=False)
+
 
 def save_fig_to_array(fig, save_path):
     import matplotlib
@@ -250,7 +288,7 @@ def save_GCD_data(index_list:None, save_path:str, sim_time_per_scene:int):
 
     for object_type in ['human', 'car']:
 
-        if object_type is 'car':
+        if object_type == 'car':
             this_dir, this_act = car_dir, car_act
         else:
             this_dir, this_act = human_dir, human_act
@@ -349,5 +387,4 @@ def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int):
         df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{start_idx}', 'data.csv'), index=False)
     print()
-
 

@@ -132,7 +132,7 @@ if __name__ == '__main__':
     import os, sys
     import pathlib
 
-    CHECK_NETGRAPH = True
+    CHECK_NETGRAPH = False
     root_dir = pathlib.Path(__file__).resolve().parents[2]
     map_path = os.path.join(root_dir, 'Data', 'BSD/source', 'label.png')
     the_map = return_map(map_path=map_path)
@@ -151,7 +151,7 @@ if __name__ == '__main__':
         plt.show()
 
     graph = Graph(map_path=map_path)
-    path = graph.get_path(start_node_index=0, num_traversed_nodes=10)
+    path = graph.get_path(start_node_index=3, num_traversed_nodes=10)
 
     ts = 0.1
 
