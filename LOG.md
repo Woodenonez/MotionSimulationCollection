@@ -2,7 +2,7 @@
 This inherits and collects many old projects that generate motion simulation of vehicles and/or humans.
 
 # 20220804
-Initial data structure is:
+Initial data structure is (V1):
 - Environment: 
 1. Static:  One image for each scene 
    [dataset - index (of scene/video/etc.) - SE image + Traj CSV]
@@ -23,7 +23,7 @@ Initial data structure is:
    “T_i” is the i-th future position in the form of “x_y”.
 
 # 20220804
-Simplified data stucture is:
+Simplified data stucture is (V2):
 - Environment: The same
 - Predict: Only in the form of trajectories
 1. Trajectory:

@@ -9,10 +9,10 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from sklearn.utils import deprecated
 
-from single_interaction_dataset import sid_object         # this is dynamic env
-from multiple_scene_multimodal_dataset import msmd_object # this is static env
-from general_crossing_dataset import gcd_object           # this is static env
-from bookstore_sim_dataset import bookstore_object        # this is static env
+from single_interaction_dataset        import sid_object       # this is dynamic env
+from multiple_scene_multimodal_dataset import msmd_object      # this is static env
+from general_crossing_dataset          import gcd_object       # this is static env
+from bookstore_sim_dataset             import bookstore_object # this is static env
 
 @deprecated
 def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):

@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 Data/
+Data_V1/
 
 # Installer logs
 pip-log.txt

@@ -6,11 +6,11 @@ from util import utils_data
 print("Generate synthetic segmentation dataset.")
 
 root_dir = Path(__file__).resolve().parents[1]
-save_path = os.path.join(root_dir, 'Data/SID_1t10_train/') # save in folder
+save_path = os.path.join(root_dir, 'Data/SID_1t20_train/') # save in folder
 
 past = 4
 minT = 1
-maxT = 10
+maxT = 20
 sim_time_per_scene = 10 # times, 10,2
 index_list = list(range(1,11)) # list(range(1,11)) # 1~10 # [1,3,5] a simple crossing
 
