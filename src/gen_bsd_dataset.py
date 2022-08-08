@@ -10,7 +10,7 @@ run "raw_data_proc.py" first
 '''
 
 root_dir = Path(__file__).resolve().parents[1]
-save_path = os.path.join(root_dir, 'Data/BSD_1t20_test/') # save in folder
+save_path = os.path.join(root_dir, 'Data_V1/BSD_1t20_test/') # save in folder
 
 past = 4
 minT = 20

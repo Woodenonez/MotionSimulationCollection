@@ -132,9 +132,9 @@ if __name__ == '__main__':
     import os, sys
     import pathlib
 
-    CHECK_NETGRAPH = False
+    CHECK_NETGRAPH = True
     root_dir = pathlib.Path(__file__).resolve().parents[2]
-    map_path = os.path.join(root_dir, 'Data', 'BSD/source', 'label.png')
+    map_path = os.path.join(root_dir, 'Data_V1', 'BSD/source', 'label.png')
     the_map = return_map(map_path=map_path)
     netgraph = return_netgraph()
 

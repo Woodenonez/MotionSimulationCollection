@@ -350,7 +350,7 @@ def save_GCD_data(index_list:None, save_path:str, sim_time_per_scene:int):
         df.to_csv(os.path.join(save_path, f'{object_type}/', 'data.csv'), index=False)
     print()
 
-def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int):
+def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=False):
     # BSD - Bookstore Simulation Dataset
 
     ts = 0.2 # sampling time
@@ -367,7 +367,10 @@ def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int):
         for _ in range(sim_time_per_scene):
             cnt += 1
             print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
-            num_traversed_nodes = random.choice(list(range(5,8)))
+            if not test:
+                num_traversed_nodes = random.choice(list(range(5,8)))
+            else:
+                num_traversed_nodes = 10
             ref_path = graph.get_path(start_node_index=start_idx, num_traversed_nodes=num_traversed_nodes)
 
             stagger = 8 + random.randint(1,5)

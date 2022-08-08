@@ -32,3 +32,6 @@ Simplified data stucture is (V2):
    “T_i” is the i-th future position in the form of “x_y”.
 **NOTE** The position prediction will be a part of trajectory prediction now!
 **ADD** “gather_all_data” in "utils_data.py" to substitute old ones.
+
+# 20220808
+Add data_handle folder and modify dataset and data handler.
