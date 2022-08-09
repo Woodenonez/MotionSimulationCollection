@@ -35,3 +35,4 @@ Simplified data stucture is (V2):
 
 # 20220808
 Add data_handle folder and modify dataset and data handler.
+"dataset.py": Delete T_channel and dyn_env. Make it specific for traj prediction.

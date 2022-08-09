@@ -21,7 +21,8 @@ class io(): # in case skimage not found
         return tr(Image.open(path)).permute(1,2,0)
 
 class ImageStackDataset(Dataset):
-    def __init__(self, csv_path:str, root_dir:str, transform:torchvision.transforms=None, ref_image_name=None, image_ext='png'):
+    def __init__(self, csv_path:str, root_dir:str, transform:torchvision.transforms=None, 
+                 pred_offset_range:tuple=None, ref_image_name=None, image_ext='png'):
         '''
         Args:
             csv_path: Path to the CSV file with dataset info.
@@ -33,6 +34,7 @@ class ImageStackDataset(Dataset):
         self.root_dir = root_dir
         self.tr = transform
 
+        self.T_range = pred_offset_range
         self.ext = image_ext  # should not have '.'
         self.background = ref_image_name # if not None, use this as the background image
 
@@ -67,7 +69,10 @@ class ImageStackDataset(Dataset):
             input_img = np.concatenate((input_img, obj_map[:,:,np.newaxis]), axis=2)
         input_img = np.concatenate((input_img, image[:,:,np.newaxis]), axis=2)
         
-        label_name_list = [x for x in list(self.info_frame) if 'T' in x]
+        if self.T_range is None:
+            label_name_list = [x for x in list(self.info_frame) if 'T' in x]
+        else:
+            label_name_list = [f'T{x}' for x in range(self.T_range[0], self.T_range[1]+1)]
         label_list = list(info[label_name_list].values)
         label = [(float(x.split('_')[0]), float(x.split('_')[1])) for x in label_list]
 
@@ -99,11 +104,8 @@ class ImageStackDataset(Dataset):
         info = self.info_frame.iloc[0]
         if img_name is not None:
             img_name = img_name
-        elif self.dyn_env:
-            img_name = str(info['t']) + '.' + self.ext
-        else:
-            img_name = str(info['index']) + '.' + self.ext
         video_folder = str(info['index'])
+        img_name = video_folder + '.' + self.ext
         img_path = os.path.join(self.root_dir, video_folder, img_name)
         image = self.togray(io.imread(img_path))
         return image.shape
