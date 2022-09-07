@@ -251,9 +251,10 @@ def save_SID_data_v2(index_list:list, save_path:str, sim_time_per_track:int=100)
         y_list   = []
         cnt = 0 # NOTE cnt is used as index for SID v2
         t = 0 # accumulated time
-        for track_idx in range(1,4): # left, straight, right
-            path  = graph.get_path(track_idx)
-            for _ in range(sim_time_per_track):
+        for track_idx in range(3): # left, straight, right
+            path  = graph.get_path(track_idx+1)
+            sim_per_track = [sim_time_per_track*x for x in graph.proportion]
+            for _ in range(sim_per_track[track_idx]):
                 cnt += 1
                 print(f'\rSimulating: {index_list.index(idx)+1}/{len(index_list)}, {cnt}/{sim_time_per_track*3}', end='   ')
 

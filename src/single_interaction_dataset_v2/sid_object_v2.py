@@ -25,7 +25,7 @@ Comments:
     10x10 meters area: a crossing scene with different cases.
     Case 1: 3 dirs, l:s:r=1:1:1, right track sigma=0
     Case 2: 3 dirs, l:s:r=2:1:1, right track sigma=0
-    Case 3: 3 dirs, l:s:r=8:1:1, right track sigma=0
+    Case 3: 3 dirs, l:s:r=1:1:3, right track sigma=0
     Case 4: 3 dirs, l:s:r=1:1:1, right track sigma=0.2
     Case 5: 3 dirs, l:s:r=1:1:1, right track sigma=1
     I'm too tired to make more comments...
@@ -73,7 +73,7 @@ class Graph:
             self.proportion = (2,1,1)
             self.right_track_end = 5
         elif case_index == 3:
-            self.proportion = (8,1,1)
+            self.proportion = (1,1,3)
             self.right_track_end = 5
         elif case_index == 4:
             self.proportion = (1,1,1)
