@@ -10,6 +10,7 @@ import matplotlib.patches as patches
 from sklearn.utils import deprecated
 
 from single_interaction_dataset        import sid_object       # this is dynamic env
+from single_interaction_dataset_v2     import sid_object_v2    # this is static env
 from multiple_scene_multimodal_dataset import msmd_object      # this is static env
 from general_crossing_dataset          import gcd_object       # this is static env
 from bookstore_sim_dataset             import bookstore_object # this is static env
@@ -213,6 +214,64 @@ def save_SID_data(index_list:list, save_path:str, sim_time_per_scene:int):
             df.to_csv(os.path.join(save_path, f'{cnt}/', 'data.csv'), index=False)
   
     print()
+
+def save_SID_data_v2(index_list:list, save_path:str, sim_time_per_track:int=100):
+    # SID - Single-target Interaction Dataset v2
+    # index_list case index 1~5
+    assert (sim_time_per_track>=100), ('Should be no less than 100 trajectories for each.')
+    
+    stagger, vmax, ts = (0.2, 1, 0.2) # object parameters
+    for idx in index_list: # each case is an individual sub-dataset
+
+        graph = sid_object_v2.Graph(idx)
+
+        fig, ax = plt.subplots()
+        graph.plot_map(ax, clean=True) ### NOTE change this
+        ax.set_aspect('equal')
+        ax.axis('off')
+
+        fig.set_size_inches(4, 4) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig_size = fig.get_size_inches()*fig.dpi # w, h
+        boundary = np.array(graph.boundary_coords)
+
+        if save_path is None:
+            plt.show()
+        else:
+            folder = os.path.join(save_path, f'{idx}/', f'{idx}/')
+            Path(folder).mkdir(parents=True, exist_ok=True)
+            plt.savefig(os.path.join(folder,f'{idx}.png'), 
+                        bbox_inches='tight', pad_inches=0)
+            plt.close()
+
+        t_list   = []
+        id_list  = []
+        idx_list = []
+        x_list   = []
+        y_list   = []
+        cnt = 0 # NOTE cnt is used as index for SID v2
+        for track_idx in range(1,4): # left, straight, right
+            path  = graph.get_path(track_idx)
+            for _ in range(sim_time_per_track):
+                cnt += 1
+                print(f'\rSimulating: {index_list.index(idx)+1}/{len(index_list)}, {cnt}/{sim_time_per_track*3}', end='   ')
+
+                obj = sid_object_v2.MovingObject(path[0], stagger)
+                obj.run(path, ts, vmax)
+                for j, tr in enumerate(obj.traj): # NOTE j is the time step
+                    x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
+                    y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
+                    t_list.append(j)
+                    id_list.append(cnt)
+                    idx_list.append(idx)
+                    x_list.append(x_in_px)
+                    y_list.append(y_in_px)
+
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='id', ignore_index=True)
+        df.to_csv(os.path.join(save_path, f'{idx}/', f'{idx}/', 'data.csv'), index=False)
+  
+    print()
+
 
 def save_MSMD_data(index_list:list, save_path:str, sim_time_per_scene:int):
     # MSMD - Multiple Scene Multimodal Dataset

@@ -1,11 +1,20 @@
-import os
+import os, sys
+import random
 from pathlib import Path
 
 import numpy as np
 import torch
+import matplotlib.pyplot as plt
 
 from _data_handle.data_handler import DataHandler
 from _data_handle.dataset import ImageStackDataset
+
+a = []
+for _ in range(100):
+    a.append(random.gauss(5,1))
+plt.hist(a)
+plt.show()
+sys.exit(0)
 
 root_dir = Path(__file__).resolve().parents[1]
 data_dir = os.path.join(root_dir, 'Data', 'GCD_1t20_train')

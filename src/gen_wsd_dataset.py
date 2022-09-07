@@ -15,10 +15,10 @@ save_path = os.path.join(root_dir, 'Data_V1/WSD_1t20_train/') # save in folder
 past = 4
 minT = 1
 maxT = 20
-sim_time_per_scene = 10 # times
+sim_time_per_scene = 20 # times
 start_node_list = list(range(30))
 
-utils_data.save_WSD_data(start_node_list, save_path, sim_time_per_scene)
+utils_data.save_WSD_data(start_node_list, save_path, sim_time_per_scene, test=False)
 print('CSV records for each index generated.')
 
 utils_data.gather_all_data_position(save_path, past, maxT=maxT, minT=minT) # go through all the obj folders and put them together in one CSV
