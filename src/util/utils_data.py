@@ -250,6 +250,7 @@ def save_SID_data_v2(index_list:list, save_path:str, sim_time_per_track:int=100)
         x_list   = []
         y_list   = []
         cnt = 0 # NOTE cnt is used as index for SID v2
+        t = 0 # accumulated time
         for track_idx in range(1,4): # left, straight, right
             path  = graph.get_path(track_idx)
             for _ in range(sim_time_per_track):
@@ -258,16 +259,17 @@ def save_SID_data_v2(index_list:list, save_path:str, sim_time_per_track:int=100)
 
                 obj = sid_object_v2.MovingObject(path[0], stagger)
                 obj.run(path, ts, vmax)
-                for j, tr in enumerate(obj.traj): # NOTE j is the time step
+                for tr in obj.traj:
                     x_in_px = int(fig_size[0] * tr[0] / (max(boundary[:,0])-min(boundary[:,0])))
                     y_in_px = int(fig_size[1] - fig_size[1] * tr[1] / (max(boundary[:,1])-min(boundary[:,1])))
-                    t_list.append(j)
+                    t_list.append(t)
                     id_list.append(cnt)
                     idx_list.append(idx)
                     x_list.append(x_in_px)
                     y_list.append(y_in_px)
+                    t += 1
 
-        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='id', ignore_index=True)
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{idx}/', f'{idx}/', 'data.csv'), index=False)
   
     print()
