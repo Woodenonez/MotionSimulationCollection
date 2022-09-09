@@ -62,10 +62,13 @@ def return_path(path, right_track_end=5):
 
 class Graph:
     def __init__(self, case_index):
+        self.case_index= case_index
         self.boundary_coords, self.obstacle_list = return_map()
         self.case_parameter(case_index)
 
-    def case_parameter(self, case_index):
+    def case_parameter(self, case_index=None):
+        if case_index is None:
+            case_index = self.case_index
         if case_index == 1:
             self.proportion = (1,1,1)
             self.right_track_end = 5
@@ -83,6 +86,11 @@ class Graph:
             self.right_track_end = random.uniform(3, 7)
         else:
             raise ModuleNotFoundError
+
+    def get_random_path(self, path):
+        self.case_parameter()
+        self.path = return_path(path, self.right_track_end)
+        return self.path
 
     def get_path(self, path):
         self.path = return_path(path, self.right_track_end)

@@ -252,12 +252,12 @@ def save_SID_data_v2(index_list:list, save_path:str, sim_time_per_track:int=100)
         cnt = 0 # NOTE cnt is used as index for SID v2
         t = 0 # accumulated time
         for track_idx in range(3): # left, straight, right
-            path  = graph.get_path(track_idx+1)
             sim_per_track = [sim_time_per_track*x for x in graph.proportion]
             for _ in range(sim_per_track[track_idx]):
                 cnt += 1
                 print(f'\rSimulating: {index_list.index(idx)+1}/{len(index_list)}, {cnt}/{sim_time_per_track*3}', end='   ')
 
+                path  = graph.get_random_path(track_idx+1)
                 obj = sid_object_v2.MovingObject(path[0], stagger)
                 obj.run(path, ts, vmax)
                 for tr in obj.traj:
