@@ -27,7 +27,7 @@ Comments:
     Case 2: 3 dirs, l:s:r=2:1:1, right track sigma=0
     Case 3: 3 dirs, l:s:r=1:1:3, right track sigma=0
     Case 4: 3 dirs, l:s:r=1:1:1, right track sigma=0.2
-    Case 5: 3 dirs, l:s:r=1:1:1, right track sigma=1
+    Case 5: 3 dirs, l:s:r=1:1:1, right track uniform [3,7]
     I'm too tired to make more comments...
 '''
 
@@ -80,7 +80,7 @@ class Graph:
             self.right_track_end = random.gauss(5, 0.2)
         elif case_index == 5:
             self.proportion = (1,1,1)
-            self.right_track_end = random.gauss(5, 1)
+            self.right_track_end = random.uniform(3, 7)
         else:
             raise ModuleNotFoundError
 
