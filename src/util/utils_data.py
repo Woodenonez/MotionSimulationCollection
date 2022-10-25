@@ -35,7 +35,8 @@ def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, perio
             obj_id = all_obj_id[i]
             df_obj = df_scene[df_scene['id'] == obj_id]
             
-            for T in range(minT,maxT+1):
+            T_list = random.sample(list(range(1,11)), k=5) # XXX
+            for T in T_list:
                 sample_list = []
                 for i in range(len(df_obj)-past*period-T): # each sample
                     sample = []

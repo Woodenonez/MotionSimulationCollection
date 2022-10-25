@@ -53,6 +53,7 @@ fig, ax = plt.subplots(figsize=(10,10))
 ax.imshow(the_map, cmap='gray')
 ax.set_aspect('equal')
 ax.axis('off')
-fig.set_size_inches(5, 5) # XXX depends on your dpi!
+fig.set_size_inches(3.3, 2.93) # XXX depends on your dpi!
 fig.tight_layout(pad=0)
+# fig.savefig('label.png')
 plt.show()

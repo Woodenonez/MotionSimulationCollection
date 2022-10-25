@@ -1,0 +1,13 @@
+Image: Width: 330 pixels, Height: 293 pixels
+
+Coordinate Correspondance:
+
+Image Coordinate: Width: 0 pixels, Height: 293 pixels ---> Actual Coordinate: (-15m, -15m)
+
+Image Coordinate: Width: 330 pixels, Height: 293 pixels ---> Actual Coordinate: (-15m + 330 * 0.1m, -15m)
+
+Image Coordinate: Width: 330 pixels, Height: 0 pixels ---> Actual Coordinate: (-15m + 330 * 0.1m, -15m + 293 * 0.1m)
+
+Image Coordinate: Width: 0 pixels, Height: 0 pixels ---> Actual Coordinate: (-15m , -15m + 293 * 0.1m)
+
+
