@@ -35,7 +35,10 @@ def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, perio
             obj_id = all_obj_id[i]
             df_obj = df_scene[df_scene['id'] == obj_id]
             
-            T_list = random.sample(list(range(1,11)), k=5) # XXX
+            if minT == maxT:
+                T_list = [maxT]
+            else:
+                T_list = random.sample(list(range(minT,maxT+1)), k=3) # XXX
             for T in T_list:
                 sample_list = []
                 for i in range(len(df_obj)-past*period-T): # each sample
@@ -457,11 +460,14 @@ def save_BSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=F
 
 def save_WSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=False):
     # WSD - Warehouse Simulation Dataset
+    import pathlib
+    root_dir = pathlib.Path(__file__).resolve().parents[2]
+    map_path = os.path.join(root_dir, 'src', 'warehouse_sim_dataset/warehouse_sim_original', 'label.png')
 
     ts = 0.2 # sampling time
     overall_sim_time = sim_time_per_scene * len(index_list)
     cnt = 0
-    graph = warehouse_object.Graph(None)
+    graph = warehouse_object.Graph(map_path)
     for start_idx in index_list:
         t = 0
         t_list = []   # time or time step
@@ -478,8 +484,8 @@ def save_WSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=F
                 num_traversed_nodes = 15
             ref_path = graph.get_path(start_node_index=start_idx, num_traversed_nodes=num_traversed_nodes)
 
-            stagger = 8 + random.randint(1,5)
-            vmax = 40 + random.randint(1,30)
+            stagger = 3 + random.randint(1,5)
+            vmax = 10 + random.randint(1,5)
             obj = warehouse_object.MovingObject(ref_path[0], stagger=stagger)
             obj.run(ref_path, ts, vmax)
 
@@ -494,6 +500,16 @@ def save_WSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=F
         Path(os.path.join(save_path, f'{start_idx}')).mkdir(parents=True, exist_ok=True)
         df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
         df.to_csv(os.path.join(save_path, f'{start_idx}', 'data.csv'), index=False)
+
+        fig, ax = plt.subplots()
+        graph.plot_map(ax)
+        ax.set_aspect('equal')
+        ax.axis('off')
+        fig.set_size_inches(3.3, 2.93) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig.savefig(os.path.join(save_path, f'{start_idx}', 'label.png'))
+        plt.close()
+
     print()
 
 

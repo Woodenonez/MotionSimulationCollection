@@ -17,19 +17,18 @@ File info:
     Date    - [Aug. 2022] -> [Sep. 2022]
     Exe     - [Yes]
 File description:
-    Single moving object interaction in warehouse dataset (BSD) simulation.
+    Single moving object interaction in warehouse dataset (WSD) simulation.
 File content:
     Graph               <class> - Define a map object.
     Moving_Object       <class> - Define a moving object.
     return_map          <func>  - Load the map.
     return_path         <func>  - Load a path.
 Comments:
-    500px*500px (20m*20m) square area: Everything is proportional to the real size.
-    For example, the coordinates (100,100) in the 400x400 real scene would be (80,80).
+    330*293 (33m*29.3m) square area: Everything is proportional to the real size.
 '''
 
 def return_map(map_path):
-    '''500X * 500X area'''
+    '''330 * 293 area'''
     the_map = Image.open(map_path)
     return the_map
 
@@ -150,8 +149,8 @@ if __name__ == '__main__':
     nx.draw_networkx_edges(netgraph, nx.get_node_attributes(netgraph,'pos'), ax=ax2, edge_color='r')
 
     ts = 0.2
-    stagger = 8 + random.randint(1,5)
-    vmax = 40 + random.randint(1,30) # 1m = 40px, reasonable speed is 40~70px/s
+    stagger = 3 + random.randint(1,5)
+    vmax = 10 + random.randint(1,5) # 1m = 10px, reasonable speed is 10~20px/s || old:# 1m = 40px, reasonable speed is 40~70px/s
     graph = Graph(map_path=map_path)
     for _ in range(SIM_TIMES):
         ax3.cla()
