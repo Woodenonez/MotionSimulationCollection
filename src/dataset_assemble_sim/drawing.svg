@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="420mm"
+   height="297mm"
+   viewBox="0 0 420 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01, custom)"
+   sodipodi:docname="drawing.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs5014" />
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.6684702"
+     inkscape:cx="571.18191"
+     inkscape:cy="744.99383"
+     inkscape:window-width="2560"
+     inkscape:window-height="1403"
+     inkscape:window-x="3600"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="node_ped" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="map_helper"
+     transform="translate(0,174)">
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;fill:#000000"
+       x="8.1396523"
+       y="-150.23979"
+       id="text8231"><tspan
+         sodipodi:role="line"
+         id="tspan8229"
+         style="font-size:16.9333px;fill:#000000"
+         x="8.1396523"
+         y="-150.23979">1m:5mm</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:16.9333px;fill:#000000"
+       x="318.71014"
+       y="-100.39905"
+       id="text8231-1"><tspan
+         sodipodi:role="line"
+         id="tspan8229-7"
+         style="font-size:16.9333px;fill:#000000"
+         x="318.71014"
+         y="-100.39905">320x200</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:16.9333px;fill:#000000"
+         x="318.71014"
+         y="-79.232422"
+         id="tspan33858">(64x40m)</tspan></text>
+    <rect
+       style="fill:none;stroke:#000000;stroke-width:1.0044;stroke-dasharray:4.01758, 1.0044;stroke-dashoffset:0"
+       id="rect_boundary"
+       width="318.99561"
+       height="198.99561"
+       x="0.5021978"
+       y="-76.497803" />
+    <rect
+       style="fill:#d49163;fill-opacity:0.5"
+       id="rect_assemble"
+       width="320"
+       height="30"
+       x="0"
+       y="-17" />
+    <rect
+       style="fill:#ff0000"
+       id="rect_test"
+       width="10"
+       height="10"
+       x="0"
+       y="113" />
+  </g>
+  <g
+     inkscape:label="Layer 2"
+     inkscape:groupmode="layer"
+     id="map_lane"
+     transform="translate(0,174)">
+    <path
+       id="rect_lane_backslash"
+       style="fill:#b3b3b3"
+       d="m 225,83 -40,-50 h 30 l 40,50 z"
+       sodipodi:nodetypes="ccccc" />
+    <path
+       id="rect_lane_slash"
+       style="fill:#b3b3b3"
+       d="m 255,83 40,-50 h -30 l -40,50 z"
+       sodipodi:nodetypes="ccccc" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_hor1"
+       width="270"
+       height="30"
+       x="25"
+       y="-67" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_hor2"
+       width="215"
+       height="30"
+       x="0"
+       y="33" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_ver2"
+       width="30"
+       height="100"
+       x="185"
+       y="-67" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_ver3"
+       width="30"
+       height="60"
+       x="225"
+       y="63" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_ver1"
+       width="30"
+       height="190"
+       x="25"
+       y="-67" />
+    <rect
+       style="fill:#b3b3b3"
+       id="rect_lane_ver4"
+       width="30"
+       height="100"
+       x="265"
+       y="-67" />
+  </g>
+  <g
+     inkscape:label="Layer 3"
+     inkscape:groupmode="layer"
+     id="map_crosswalk"
+     transform="translate(0,174)">
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="185"
+       y="-37"
+       id="rect_cw_1" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="25"
+       y="-37"
+       id="rect_cw_2" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="265"
+       y="-37"
+       id="rect_cw_3" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="265"
+       y="23"
+       id="rect_cw_4" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="185"
+       y="23"
+       id="rect_cw_5" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="225"
+       y="83"
+       id="rect_cw_6" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="25"
+       y="23"
+       id="rect_cw_7" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="30"
+       height="10"
+       x="25"
+       y="63"
+       id="rect_cw_8" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="10"
+       height="30"
+       x="15"
+       y="33"
+       id="rect_cw_9" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="10"
+       height="30"
+       x="55"
+       y="33"
+       id="rect_cw_10" />
+    <rect
+       style="fill:#f4de89;fill-opacity:0.5"
+       width="10"
+       height="30"
+       x="175"
+       y="33"
+       id="rect_cw_11" />
+  </g>
+  <g
+     inkscape:label="Layer 4"
+     inkscape:groupmode="layer"
+     id="map_obstacle"
+     transform="translate(0,174)">
+    <path
+       id="rect_build_1"
+       style="fill:#000000"
+       d="m 209,83 v -20 l 16,20 z"
+       sodipodi:nodetypes="cccc" />
+    <path
+       id="rect_build_2"
+       style="fill:#000000"
+       d="m 295,83 v -50 l -40,50 z"
+       sodipodi:nodetypes="cccc" />
+    <path
+       id="rect_build_3"
+       style="fill:#000000"
+       d="m 240,65 25,-32 h -50 z"
+       sodipodi:nodetypes="cccc" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="65"
+       y="73"
+       id="rect_rack_1" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="85"
+       y="73"
+       id="rect_rack_2" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="105"
+       y="73"
+       id="rect_rack_3" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="125"
+       y="73"
+       id="rect_rack_4" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="145"
+       y="73"
+       id="rect_rack_5" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="165"
+       y="73"
+       id="rect_rack_6" />
+    <rect
+       style="fill:#000000"
+       width="10"
+       height="30"
+       x="185"
+       y="73"
+       id="rect_rack_7" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_1"
+       width="1"
+       height="30"
+       x="255"
+       y="93" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_2"
+       width="1"
+       height="30"
+       x="224"
+       y="93" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_3"
+       width="1"
+       height="50"
+       x="55"
+       y="73" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_4"
+       width="1"
+       height="50"
+       x="24"
+       y="73" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_5"
+       width="270"
+       height="1"
+       x="25"
+       y="-68" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_6"
+       width="1"
+       height="31"
+       x="24"
+       y="-68" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_7"
+       width="1"
+       height="31"
+       x="295"
+       y="-68" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_8"
+       width="1"
+       height="10"
+       x="24"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_9"
+       width="1"
+       height="10"
+       x="55"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_10"
+       width="1"
+       height="10"
+       x="184"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_11"
+       width="1"
+       height="10"
+       x="215"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_12"
+       width="1"
+       height="10"
+       x="264"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_13"
+       width="1"
+       height="10"
+       x="295"
+       y="-27" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_14"
+       width="1"
+       height="10"
+       x="295"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_15"
+       width="1"
+       height="10"
+       x="264"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_16"
+       width="1"
+       height="10"
+       x="215"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_17"
+       width="1"
+       height="10"
+       x="184"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_18"
+       width="1"
+       height="10"
+       x="55"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_19"
+       width="1"
+       height="10"
+       x="24"
+       y="13" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_20"
+       width="15"
+       height="1"
+       x="0"
+       y="32" />
+    <rect
+       style="fill:#000000"
+       id="rect_rail_21"
+       width="15"
+       height="1"
+       x="0"
+       y="63" />
+  </g>
+  <g
+     inkscape:label="Layer 5"
+     inkscape:groupmode="layer"
+     id="node_lane"
+     transform="translate(0,174)">
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_12"
+       cx="47.5"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_11"
+       cx="47.5"
+       cy="55.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_10"
+       cx="47.5"
+       cy="40.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_5"
+       cx="32.5"
+       cy="40.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_6"
+       cx="32.5"
+       cy="55.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_7"
+       cx="32.5"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_1"
+       cx="0"
+       cy="40.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_2"
+       cx="0"
+       cy="55.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_9"
+       cx="47.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_8"
+       cx="47.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_3"
+       cx="32.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_4"
+       cx="32.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_14"
+       cx="192.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_19"
+       cx="207.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_18"
+       cx="207.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_13"
+       cx="192.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_26"
+       cx="272.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_29"
+       cx="287.5"
+       cy="-44.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_28"
+       cx="287.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_25"
+       cx="272.5"
+       cy="-59.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_30"
+       cx="287.5"
+       cy="33"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_27"
+       cx="272.5"
+       cy="33"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_23"
+       cx="247.5"
+       cy="83"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_21"
+       cx="232.5"
+       cy="83"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_22"
+       cx="232.5"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_24"
+       cx="247.5"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_20"
+       cx="207.5"
+       cy="33"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_15"
+       cx="192.5"
+       cy="33"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_16"
+       cx="185"
+       cy="40.5"
+       r="1" />
+    <circle
+       style="fill:#ff0000;stroke-width:0.348001"
+       id="node_17"
+       cx="185"
+       cy="55.5"
+       r="1" />
+  </g>
+  <g
+     inkscape:label="Layer 6"
+     inkscape:groupmode="layer"
+     id="node_ped"
+     transform="translate(0,174)">
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_1"
+       cx="60"
+       cy="68"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_3"
+       cx="60"
+       cy="28"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_5"
+       cx="180"
+       cy="28"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_6"
+       cx="300"
+       cy="28"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_11"
+       cx="300"
+       cy="-32"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_12"
+       cx="20"
+       cy="-32"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_7"
+       cx="180"
+       cy="68"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_8"
+       cx="204"
+       cy="68"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_9"
+       cx="204"
+       cy="88"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_10"
+       cx="300"
+       cy="88"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_4"
+       cx="20"
+       cy="28"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_2"
+       cx="20"
+       cy="68"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_13"
+       cx="0"
+       cy="68"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_14"
+       cx="0"
+       cy="28"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_15"
+       cx="20"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_16"
+       cx="60"
+       cy="123"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_17"
+       cx="20"
+       cy="-71"
+       r="1" />
+    <circle
+       style="fill:#f4de00;stroke-width:0.348001"
+       id="refpt_18"
+       cx="300"
+       cy="-71"
+       r="1" />
+  </g>
+</svg>

@@ -9,14 +9,15 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 from sklearn.utils import deprecated
 
-from single_interaction_dataset        import sid_object       # this is dynamic env
-from single_interaction_dataset_v2     import sid_object_v2    # this is static env
-from multiple_scene_multimodal_dataset import msmd_object      # this is static env
-from general_crossing_dataset          import gcd_object       # this is static env
-from bookstore_sim_dataset             import bookstore_object # this is static env
-from warehouse_sim_dataset             import warehouse_object # this is static env
+from dataset_single_interaction        import sid_object       # this is dynamic env
+from dataset_single_interaction_v2     import sid_object_v2    # this is static env
+from dataset_multiple_scene_multimodal import msmd_object      # this is static env
+from dataset_general_crossing          import gcd_object       # this is static env
+from dataset_bookstore_sim             import bookstore_object # this is static env
+from dataset_warehouse_sim             import warehouse_object # this is static env
+from dataset_assemble_sim              import assemble_object  # this is static env
 
-# @deprecated
+@deprecated # This was used for WTA single position prediction, should not be used in the future
 def gather_all_data_position(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, save_dir:str=None):
     # data_dir - index - img&csv
     if save_dir is None:
@@ -121,7 +122,7 @@ def gather_all_data(data_dir:str, past:int, maxT:int, minT:int=1, period:int=1, 
                     sample.append(obj_past)
                 sample.append(df_obj.iloc[i+past]['t'])
                 sample.append(df_obj.iloc[i+past+maxT]['id'])
-                sample.append(df_obj.iloc[i+past+maxT]['index'])
+                sample.append(int(df_obj.iloc[i+past+maxT]['index']))
                 for T in range(minT, maxT+1):
                     sample.append(f'{df_obj.iloc[i+past+T]["x"]}_{df_obj.iloc[i+past+T]["y"]}')
                 ################## Sample E N D ##################
@@ -506,6 +507,61 @@ def save_WSD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=F
         ax.set_aspect('equal')
         ax.axis('off')
         fig.set_size_inches(3.3, 2.93) # XXX depends on your dpi!
+        fig.tight_layout(pad=0)
+        fig.savefig(os.path.join(save_path, f'{start_idx}', 'label.png'))
+        plt.close()
+
+    print()
+
+def save_ALD_data(index_list:list, save_path:str, sim_time_per_scene:int, test=False):
+    # ALD - Assemble Simulation Dataset
+    import pathlib
+    root_dir = pathlib.Path(__file__).resolve().parents[2]
+    map_path = os.path.join(root_dir, 'src', 'dataset_assemble_sim/', 'label.png')
+
+    ts = 0.2 # sampling time
+    overall_sim_time = sim_time_per_scene * len(index_list)
+    cnt = 0
+    netgraph = assemble_object.return_netgraph_ped(inversed_y=True, y_max=400)
+    graph = assemble_object.Graph(netgraph, map_path)
+    for start_idx in index_list:
+        t = 0
+        t_list = []   # time or time step
+        id_list = []
+        idx_list = [] # more information (e.g. scene index)
+        x_list = []   # x coordinate
+        y_list = []   # y coordinate
+        for _ in range(sim_time_per_scene):
+            cnt += 1
+            print(f'\rSimulating: {cnt}/{overall_sim_time}   ', end='')
+            if not test:
+                num_traversed_nodes = random.choice(list(range(8,12)))
+            else:
+                num_traversed_nodes = 15
+            ref_path = graph.get_path(start_node_index=start_idx, num_traversed_nodes=num_traversed_nodes)
+
+            stagger = 3 + random.randint(1,5)
+            vmax = 10 + random.randint(1,5)
+            obj = assemble_object.MovingObject(ref_path[0], stagger=stagger)
+            obj.run(ref_path, ts, vmax)
+
+            ### Generate traj
+            for tr in obj.traj:
+                t_list.append(t)
+                id_list.append(cnt)
+                idx_list.append(start_idx)
+                x_list.append(tr[0])
+                y_list.append(tr[1])
+                t += 1
+        Path(os.path.join(save_path, f'{start_idx}')).mkdir(parents=True, exist_ok=True)
+        df = pd.DataFrame({'t':t_list, 'id':id_list, 'index':idx_list, 'x':x_list, 'y':y_list}).sort_values(by='t', ignore_index=True)
+        df.to_csv(os.path.join(save_path, f'{start_idx}', 'data.csv'), index=False)
+
+        fig, ax = plt.subplots()
+        graph.plot_map(ax)
+        ax.set_aspect('equal')
+        ax.axis('off')
+        fig.set_size_inches(6.4, 4) # XXX depends on your dpi!
         fig.tight_layout(pad=0)
         fig.savefig(os.path.join(save_path, f'{start_idx}', 'label.png'))
         plt.close()
