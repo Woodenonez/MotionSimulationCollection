@@ -6,8 +6,8 @@ import numpy as np
 import torch
 import matplotlib.pyplot as plt
 
-from _data_handle.data_handler import DataHandler
-from _data_handle.dataset import ImageStackDataset
+from _data_handle_mmp.data_handler import DataHandler
+from _data_handle_mmp.dataset import ImageStackDataset
 
 
 root_dir = Path(__file__).resolve().parents[1]
