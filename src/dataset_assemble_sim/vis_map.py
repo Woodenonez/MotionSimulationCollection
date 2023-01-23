@@ -57,11 +57,11 @@ for cw in crosswalk_area:
 for pn in path_nodes:
     plot_node(ax, pn['position'], 'ko')
     plt.text(pn['position'][0], pn['position'][1], str(pn['id']))
-    # print(f"{pn['id']}: {tuple([int(x*10) for x in pn['position'][:2]])}")
+    print(f"{pn['id']}: {tuple([int(x*10) for x in pn['position'][:2]])}")
 for pn in ped_nodes:
     plot_node(ax, pn['position'], 'yo')
     plt.text(pn['position'][0], pn['position'][1], str(pn['id']))
-    print(f"{pn['id']}: {tuple([int(x*10) for x in pn['position'][:2]])}")
+    # print(f"{pn['id']}: {tuple([int(x*10) for x in pn['position'][:2]])}")
 
 
 ax.axis('equal')

@@ -47,6 +47,34 @@ def return_path(netgraph:nx.Graph, start_node_index, num_traversed_nodes):
         path.append(netgraph.nodes[next_idx]['pos'])
     return path
 
+def return_netgraph_veh(inversed_y=False, y_max=None):
+    if inversed_y & y_max is None:
+        raise ValueError('Maximal Y cannot be None.')
+
+    nodes = {12: (95, 0), 11: (95, 135), 10: (95, 165), 5: (65, 165), 6: (65, 135), 7: (65, 0), 
+             1: (0, 165), 2: (0, 135), 9: (95, 335), 8: (95, 365), 3: (65, 365), 4: (65, 335), 
+             14: (385, 335), 19: (415, 335), 18: (415, 365), 13: (385, 365), 26: (545, 335), 29: (575, 335), 
+             28: (575, 365), 25: (545, 365), 30: (575, 180), 27: (545, 180), 23: (495, 80), 21: (465, 80), 
+             22: (465, 0), 24: (495, 0), 20: (415, 180), 15: (385, 180), 16: (370, 165), 17: (370, 135)
+             }
+
+    edges = [(1,5), (2,6), (3,4), (3,8), (4,5), (5,6), (5,10), 
+             (6,7), (6,11), (8,13), (9,10), (9,14), (10,11), (10,16), (11,12), (11,17), 
+             (13,14), (13,18), (14,15), (14,19), (15,16), (15,21), (17,20), 
+             (18,19), (18,25), (19,20), (19,26), (20,23), (21,22), (21,27), (23,24), (23,30), 
+             (25,28), (26,27), (28,29), (29,30),
+             ]
+
+    if inversed_y:
+        for id in list(nodes):
+            nodes[id] = (nodes[id][0], y_max-nodes[id][1])
+
+    G = nx.Graph()
+    for p in nodes:
+        G.add_node(p, pos=nodes[p])
+    G.add_edges_from(edges)
+    return G
+
 def return_netgraph_ped(inversed_y=False, y_max=None):
     if inversed_y & y_max is None:
         raise ValueError('Maximal Y cannot be None.')
