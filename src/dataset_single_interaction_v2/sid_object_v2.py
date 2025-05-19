@@ -156,18 +156,28 @@ if __name__ == '__main__':
 
     PLOT_DYN = False
     CASE_IDX = 5
+    repeat = 100
 
     ts = 0.2
     stagger = 0.2
     vmax = 1
+    
+    path_list = []
 
-    graph = Graph(CASE_IDX)
-    path_list = [graph.get_path(x) for x in [1,2,3]]
+    for _ in range(repeat):
+        graph = Graph(CASE_IDX)
+        path_list.append(graph.get_random_path(random.choice([1,2,3]))) 
 
     obj_list = [MovingObject(path[0], stagger) for path in path_list]
     for obj, path in zip(obj_list, path_list):
         obj.run(path, ts, vmax)
     traj_list = [obj.traj for obj in obj_list]
+
+    ### Save data into JSON file ###
+    import json
+    data = {'traj_list': traj_list}
+    with open('map_simulation_data.json', 'w') as f:
+        json.dump(data, f)
 
     if PLOT_DYN:
         fig, ax = plt.subplots()
