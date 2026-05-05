@@ -94,7 +94,7 @@ def np_multigau_map(gaumap_list, weights=[]):
 
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    from mpl_toolkits.mplot3d import Axes3D
+    from mpl_toolkits.mplot3d import Axes3D # type: ignore
 
     centre1 = (30,40)
     centre2 = (60,60)

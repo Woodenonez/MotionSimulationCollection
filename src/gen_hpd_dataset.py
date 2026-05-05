@@ -9,8 +9,10 @@ print("Generate synthetic segmentation dataset.")
 run "raw_data_proc.py" first
 '''
 
+version = 'hospital' # 'hospital' or 'zospital'
+
 root_dir = Path(__file__).resolve().parents[1]
-save_path = os.path.join(root_dir, 'Data/HPD_1t20_train/') # save in folder
+save_path = os.path.join(root_dir, f'Data/{version}_1t20_train/') # save in folder
 
 past = 4
 minT = 1
@@ -18,7 +20,7 @@ maxT = 20
 sim_time_per_scene = 30 # times
 start_node_list = list(range(1,22))
 
-utils_data.save_HPD_data(start_node_list, save_path, sim_time_per_scene, test=False)
+utils_data.save_HPD_data(start_node_list, save_path, sim_time_per_scene, test=False, version=version)
 print('CSV records for each index generated.')
 
 utils_data.gather_all_data(save_path, past, maxT=maxT, minT=minT) # go through all the obj folders and put them together in one CSV
